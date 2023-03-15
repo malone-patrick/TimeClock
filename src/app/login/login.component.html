@@ -1,0 +1,14 @@
+
+<span class="p-float-label margin">
+    <label for="float-input">Username</label>
+    <input id="float-input" type="text" pInputText [(ngModel)]="username"> 
+</span>
+<span class="p-float-label margin">
+    <label for="float-input">Password</label>
+    <input id="float-input" type="text" pInputText [(ngModel)]="password"> 
+</span>
+
+<div>
+    <button (click)="login()" class="margin">Log In</button>
+    <button (click)="register()" class="margin">Register</button>
+</div>

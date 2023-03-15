@@ -1,0 +1,31 @@
+<p-panel header={{userInfo.name}}>
+    <h2>{{currentStatus}}</h2>
+    <button class="margin" (click)="updateTime(actionType.SHIFT, startEnd.START)" *ngIf="(!latestActions.shiftActive || userInfo.access == accessLevels.ADMIN)">Start Shift</button>
+    <button class="margin" (click)="updateTime(actionType.SHIFT, startEnd.END)" *ngIf="((latestActions.shiftActive && !latestActions.lunchActive && !latestActions.breakActive) || userInfo.access == accessLevels.ADMIN)">End Shift</button>
+    <button class="margin" (click)="updateTime(actionType.LUNCH, startEnd.START)" *ngIf="((!latestActions.lunchActive && !latestActions.breakActive && latestActions.shiftActive) || userInfo.access == accessLevels.ADMIN)">Start Lunch</button>
+    <button class="margin" (click)="updateTime(actionType.LUNCH, startEnd.END)" *ngIf="(latestActions.lunchActive || userInfo.access == accessLevels.ADMIN)">End Lunch</button>
+    <button class="margin" (click)="updateTime(actionType.BREAK, startEnd.START)" *ngIf="((!latestActions.breakActive && !latestActions.lunchActive && latestActions.shiftActive) || userInfo.access == accessLevels.ADMIN)">Start Break</button>
+    <button class="margin" (click)="updateTime(actionType.BREAK, startEnd.END)" *ngIf="(latestActions.breakActive || userInfo.access == accessLevels.ADMIN)">End Break</button>
+    <button class="float-right" (click)="logout()">Log Out</button>
+    <button class="float-right" (click)="back()" *ngIf="(userInfo.access == accessLevels.ADMIN)">Back</button>
+
+    <table mat-table #timeTable [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef> Updated </th>
+          <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Punch </th>
+          <td mat-cell *matCellDef="let element"> {{element.action}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef> Time </th>
+          <td mat-cell *matCellDef="let element"> {{element.time | date : 'short'}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</p-panel>
